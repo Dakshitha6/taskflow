@@ -3,49 +3,51 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { usePathname, useRouter } from "next/navigation";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { auth } from "@/services/firebase.config";
+import SplashScreen from "@/components/SplashScreen";
 
 interface AuthContextType {
   user: User | null;
   token: string | null;
   refreshToken: () => Promise<void>;
   logout: () => Promise<void>;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-
-
-export const AuthProvider= ({ children }:any) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); 
   const router = useRouter();
-  const path=usePathname();
+  const path = usePathname();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-
-      if (path === "/signup") return;
+      setLoading(true); 
 
       if (currentUser) {
         setUser(currentUser);
         const idToken = await currentUser.getIdToken();
         setToken(idToken);
-        router.push("/dashboard"); 
+        router.push("/dashboard");
       } else {
         setUser(null);
         setToken(null);
-        if (path !== "/login") {
+        if (path !== "/login" && path !== "/signup") {
           router.push("/login");
         }
       }
+
+      setLoading(false);
     });
-  
+
     return () => unsubscribe();
   }, [router]);
 
   const refreshToken = async () => {
     if (user) {
-      const idToken = await user.getIdToken(true); 
+      const idToken = await user.getIdToken(true);
       setToken(idToken);
     }
   };
@@ -58,8 +60,12 @@ export const AuthProvider= ({ children }:any) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, refreshToken, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, token, refreshToken, logout, loading }}>
+       {loading ? (
+     <SplashScreen/>
+    ) : (
+      children
+    )}
     </AuthContext.Provider>
   );
 };

@@ -19,6 +19,7 @@ export const fetchTodosAPI = async (firebaseUserId: string, search?: string) => 
       payload.search = search;
     }
 
+    console.log('`${apiUrl}/getAllTasks`', `${apiUrl}/getAllTasks`)
     const response = await axios.post(
       `${apiUrl}/getAllTasks`,
       payload,
