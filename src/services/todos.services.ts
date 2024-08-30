@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 // const apiUrl = "http://localhost:5001";
 //for prod
 const apiUrl = "https://taskflow-server-production.up.railway.app/";
+
 export const fetchTodosAPI = async (firebaseUserId: string, search?: string) => {
   try {
     const user = getAuth().currentUser;
@@ -89,7 +90,7 @@ export const updateTaskAPI = async (
 
     return response.data;
   } catch (error) {
-    console.error('Failed to update task:', error);
+    console.error("Failed to update task:", error);
     throw new Error("Failed to update task");
   }
 };

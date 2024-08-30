@@ -1,9 +1,9 @@
+import { ToastContainer } from "react-toastify";
 
-function Home({ Component, pageProps }:any) {
+  function Home() {
   return (
-      <>
-          <Component {...pageProps} />
-      </>
+   <div className="">
+   </div>
   );
 }
 

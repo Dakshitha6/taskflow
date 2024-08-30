@@ -1,30 +1,30 @@
-'use client';
-import { auth, createUserWithEmailAndPassword, googleProvider, signInWithPopup } from '@/services/firebase.config';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+"use client";
+import { auth, createUserWithEmailAndPassword, googleProvider, signInWithPopup } from "@/services/firebase.config";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function SignupComponent() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const router = useRouter();
 
 
   const handleSignup = async () => {
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      router.push('/dashboard'); 
+      router.push("/dashboard"); 
     } catch (error:any) {
       setError(error.message);
     }
@@ -33,7 +33,7 @@ function SignupComponent() {
   const handleGoogleSignup = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      router.push('/dashboard'); 
+      router.push("/dashboard"); 
     } catch (error:any) {
       setError(error.message);
     }
@@ -91,7 +91,7 @@ function SignupComponent() {
       <div className="mb-4 relative">
         <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
         <input
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -109,7 +109,7 @@ function SignupComponent() {
       <div className="mb-6 relative">
         <label htmlFor="confirmPassword" className="block text-gray-700 mb-2">Confirm Password</label>
         <input
-          type={showConfirmPassword ? 'text' : 'password'}
+          type={showConfirmPassword ? "text" : "password"}
           id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
@@ -139,7 +139,7 @@ function SignupComponent() {
       </button>
 
       <p className="text-center text-gray-600 mt-4">
-        Already have an account?{' '}
+        Already have an account?{" "}
         <a href="/login" className="text-blue-500 hover:underline">Login</a>
       </p>
     </div>

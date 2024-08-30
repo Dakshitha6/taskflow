@@ -1,8 +1,8 @@
-'use client';
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { auth } from '@/services/firebase.config';
+"use client";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import { auth } from "@/services/firebase.config";
 
 interface AuthContextType {
   user: User | null;
@@ -24,18 +24,18 @@ export const AuthProvider= ({ children }:any) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
 
-      if (path === '/signup') return;
+      if (path === "/signup") return;
 
       if (currentUser) {
         setUser(currentUser);
         const idToken = await currentUser.getIdToken();
         setToken(idToken);
-        router.push('/dashboard'); 
+        router.push("/dashboard"); 
       } else {
         setUser(null);
         setToken(null);
-        if (path !== '/login') {
-          router.push('/login');
+        if (path !== "/login") {
+          router.push("/login");
         }
       }
     });
@@ -54,7 +54,7 @@ export const AuthProvider= ({ children }:any) => {
     await signOut(auth);
     setUser(null);
     setToken(null);
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
@@ -67,7 +67,7 @@ export const AuthProvider= ({ children }:any) => {
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('Component is not wrapped within AuthProvider');
+    throw new Error("Component is not wrapped within AuthProvider");
   }
   return context;
 };

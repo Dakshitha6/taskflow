@@ -1,12 +1,12 @@
-import React from 'react';
-import { useDrop } from 'react-dnd';
-import TaskCard from './TaskCard';
+import React from "react";
+import { useDrop } from "react-dnd";
+import TaskCard from "./TaskCard";
 
 
 
 const TaskTable = ({ title, tasks, handleDrop, deleteTask, onViewDetails }:ColumnProps) => {
   const [, drop] = useDrop({
-    accept: 'TASK',
+    accept: "TASK",
     drop: (item: Task) => handleDrop(item),
   });
 

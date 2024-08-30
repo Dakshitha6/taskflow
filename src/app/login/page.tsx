@@ -1,5 +1,5 @@
-import LoginComponent from '@/components/LoginForm';
-import withAuth from '@/hoc/withAuth';
+import LoginComponent from "@/components/LoginForm";
+import withAuth from "@/hoc/withAuth";
 
  function LoginPage() {
 

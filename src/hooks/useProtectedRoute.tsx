@@ -1,6 +1,6 @@
-import { useAuth } from '../context/AuthContext';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useAuth } from "../context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export const useProtectedRoute = () => {
   const { user } = useAuth();
@@ -8,7 +8,7 @@ export const useProtectedRoute = () => {
 
   useEffect(() => {
     if (!user) {
-      router.push('/login');
+      router.push("/login");
     }
   }, [user, router]);
 

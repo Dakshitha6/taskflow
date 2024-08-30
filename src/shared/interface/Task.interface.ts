@@ -6,7 +6,7 @@
       createdAt: string; 
       createdBy: string;
     };
-    progress: 'todo' | 'inProgress' | 'done';
+    progress: "todo" | "inProgress" | "done";
   }
 
 interface ColumnProps {

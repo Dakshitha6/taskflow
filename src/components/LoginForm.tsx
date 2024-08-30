@@ -1,21 +1,21 @@
-'use client';
-import { auth, googleProvider, signInWithEmailAndPassword, signInWithPopup } from '@/services/firebase.config';
-import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+"use client";
+import { auth, googleProvider, signInWithEmailAndPassword, signInWithPopup } from "@/services/firebase.config";
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 function LoginComponent() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success('Login successful!');
-      router.push('/dashboard'); 
+      toast.success("Login successful!");
+      router.push("/dashboard"); 
     } catch (error: any) {
       handleError(error);
     }
@@ -24,8 +24,8 @@ function LoginComponent() {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      toast.success('Login successful!');
-      router.push('/dashboard');
+      toast.success("Login successful!");
+      router.push("/dashboard");
     } catch (error: any) {
       handleError(error);
     }
@@ -38,26 +38,26 @@ function LoginComponent() {
   const handleError = (error: any) => {
     
     switch (error.code) {
-      case 'auth/invalid-email':
-        toast.error('Invalid email address.');
+      case "auth/invalid-email":
+        toast.error("Invalid email address.");
         break;
-      case 'auth/user-disabled':
-        toast.error('This account has been disabled.');
+      case "auth/user-disabled":
+        toast.error("This account has been disabled.");
         break;
-      case 'auth/user-not-found':
-        toast.error('No user found with this email.');
+      case "auth/user-not-found":
+        toast.error("No user found with this email.");
         break;
-      case 'auth/wrong-password':
-        toast.error('Incorrect password.');
+      case "auth/wrong-password":
+        toast.error("Incorrect password.");
         break;
-      case 'auth/popup-closed-by-user':
-        toast.error('Google sign-in popup was closed.');
+      case "auth/popup-closed-by-user":
+        toast.error("Google sign-in popup was closed.");
         break;
-      case 'auth/network-request-failed':
-        toast.error('Network error. Please try again.');
+      case "auth/network-request-failed":
+        toast.error("Network error. Please try again.");
         break;
       default:
-        toast.error('An unknown error occurred.');
+        toast.error("An unknown error occurred.");
         break;
     }
   };
@@ -81,7 +81,7 @@ function LoginComponent() {
       <div className="mb-6 relative">
         <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
         <input
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -111,7 +111,7 @@ function LoginComponent() {
       </button>
 
       <p className="text-center text-gray-600 mt-4">
-        Don't have an account?{' '}
+        Don&quot;t have an account?
         <a href="/signup" className="text-blue-500 hover:underline">Sign up</a>
       </p>
     </div>

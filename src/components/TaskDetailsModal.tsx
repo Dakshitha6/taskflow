@@ -1,5 +1,5 @@
-import { formatDate } from '@/shared/function/helper.function';
-import React from 'react';
+import { formatDate } from "@/shared/function/helper.function";
+import React from "react";
 
 interface TaskDetailsModalProps {
   task: Task | null;

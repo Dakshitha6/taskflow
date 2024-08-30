@@ -1,8 +1,8 @@
-import { formatDate } from '@/shared/function/helper.function';
-import React, { useState } from 'react';
-import { useDrag } from 'react-dnd';
-import { updateTaskAPI } from '@/services/todos.services';
-import EditTaskModal from './EditTaskModal';
+import { formatDate } from "@/shared/function/helper.function";
+import React, { useState } from "react";
+import { useDrag } from "react-dnd";
+import { updateTaskAPI } from "@/services/todos.services";
+import EditTaskModal from "./EditTaskModal";
 
 interface TaskCardProps {
   task: Task;
@@ -12,7 +12,7 @@ interface TaskCardProps {
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, deleteTask, onViewDetails }) => {
   const [{ isDragging }, drag] = useDrag({
-    type: 'TASK',
+    type: "TASK",
     item: task,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -26,7 +26,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, deleteTask, onViewDetails }) 
     try {
       await deleteTask(currentTask._id);
     } catch (error) {
-      console.error('Failed to delete task:', error);
+      console.error("Failed to delete task:", error);
     }
   };
 
@@ -39,14 +39,14 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, deleteTask, onViewDetails }) 
       }));
       setIsEditModalOpen(false);
     } catch (error) {
-      console.error('Failed to update task:', error);
+      console.error("Failed to update task:", error);
     }
   };
 
   return (
     <div
       ref={drag as any}
-      className={`p-4 mb-4 rounded-lg shadow-md ${isDragging ? 'opacity-50' : 'bg-gray-50'}`}
+      className={`p-4 mb-4 rounded-lg shadow-md ${isDragging ? "opacity-50" : "bg-gray-50"}`}
     >
       <h3 className="font-semibold text-lg">{currentTask.name}</h3>
       <p className="text-gray-600 mb-2">{currentTask.description}</p>
