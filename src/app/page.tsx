@@ -1,6 +1,10 @@
 
-export default function Home() {
+function Home({ Component, pageProps }:any) {
   return (
-    <div>Home Page</div>
+      <>
+          <Component {...pageProps} />
+      </>
   );
 }
+
+export default Home;

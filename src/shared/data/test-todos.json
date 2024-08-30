@@ -1,0 +1,37 @@
+{
+    "todo": [
+      {
+        "id": "1",
+        "name": "Sample Task 1",
+        "description": "Description for task 1",
+        "createdAt": "2024-08-29T10:00:00Z",
+        "column": "todo"
+      },
+      {
+        "id": "2",
+        "name": "Sample Task 2",
+        "description": "Description for task 2",
+        "createdAt": "2024-08-29T11:00:00Z",
+        "column": "todo"
+      }
+    ],
+    "inProgress": [
+      {
+        "id": "3",
+        "name": "Sample Task 3",
+        "description": "Description for task 3",
+        "createdAt": "2024-08-29T12:00:00Z",
+        "column": "inProgress"
+      }
+    ],
+    "done": [
+      {
+        "id": "4",
+        "name": "Sample Task 4",
+        "description": "Description for task 4",
+        "createdAt": "2024-08-29T13:00:00Z",
+        "column": "done"
+      }
+    ]
+  }
+  
