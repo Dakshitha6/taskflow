@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useProtectedRoute } from "@/hooks/useProtectedRoute";
 import TaskTable from "./TaskTable";
 import {
   fetchTodosAPI,
@@ -12,8 +11,8 @@ import {
 } from "@/services/todos.services";
 import AddTaskModal from "./AddTaskModal";
 import TaskDetailsModal from "./TaskDetailsModal";
-import SplashScreen from "./SplashScreen";
 import TopBar from "./TopBar";
+import { AuthContextType, useAuth } from "@/context/AuthContext";
 
 const initialTasks: Record<"todo" | "inProgress" | "done", Task[]> = {
   todo: [],
@@ -22,7 +21,11 @@ const initialTasks: Record<"todo" | "inProgress" | "done", Task[]> = {
 };
 
 const Dashboard = () => {
-  const user = useProtectedRoute();
+  const { user,token } = useAuth();
+  const authContext:AuthContextType={
+    user:user,
+    token:token
+  }
   const [tasks, setTasks] =
     useState<Record<"todo" | "inProgress" | "done", Task[]>>(initialTasks);
   const [newTask, setNewTask] = useState<{ name: string; description: string }>(
@@ -42,7 +45,7 @@ const Dashboard = () => {
       try {
         setLoading(true);
         if (user) {
-          const todos = await fetchTodosAPI(user.uid, query);
+          const todos = await fetchTodosAPI(authContext, query);
 
           const sortedTasks = {
             todo: todos.tasks.filter((task: Task) => task.progress === "todo"),
@@ -103,7 +106,7 @@ const Dashboard = () => {
   const handleDrop = async (item: Task, column: keyof typeof initialTasks) => {
     try {
       setLoading(true);
-      await updateTaskAPI(item._id, column);
+      await updateTaskAPI(authContext,item._id, column);
       await loadTodos(searchQuery);
     } catch (error) {
       console.error("Failed to update task progress:", error);
@@ -124,7 +127,7 @@ const Dashboard = () => {
         return updatedTasks;
       });
 
-      await deleteTaskAPI(taskId);
+      await deleteTaskAPI(authContext,taskId);
     } catch (error) {
       console.error("Failed to delete task:", error);
     }
@@ -140,7 +143,7 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-      await createTaskAPI(task);
+      await createTaskAPI(authContext,task);
 
       setNewTask({ name: "", description: "" });
       setIsModalOpen(false);

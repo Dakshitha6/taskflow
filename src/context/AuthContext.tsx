@@ -5,11 +5,11 @@ import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { auth } from "@/services/firebase.config";
 import SplashScreen from "@/components/SplashScreen";
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null | undefined;
   token: string | null;
-  refreshToken: () => Promise<void>;
-  logout: () => Promise<void>;
+  refreshToken?: () => Promise<void>;
+  logout?: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

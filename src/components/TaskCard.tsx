@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import { updateTaskAPI } from "@/services/todos.services";
 import EditTaskModal from "./EditTaskModal";
+import { AuthContextType, useAuth } from "@/context/AuthContext";
 
 interface TaskCardProps {
   task: Task;
@@ -11,6 +12,11 @@ interface TaskCardProps {
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, deleteTask, onViewDetails }) => {
+  const { user,token } = useAuth();
+  const authContext:AuthContextType={
+    user:user,
+    token:token
+  }
   const [{ isDragging }, drag] = useDrag({
     type: "TASK",
     item: task,
@@ -32,7 +38,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, deleteTask, onViewDetails }) 
 
   const handleEdit = async (updatedTask: any) => {
     try {
-      await updateTaskAPI(currentTask._id, updatedTask?.progress, updatedTask?.name, updatedTask?.description);
+      await updateTaskAPI(authContext,currentTask._id, updatedTask?.progress, updatedTask?.name, updatedTask?.description);
       setCurrentTask((prevTask) => ({
         ...prevTask,
         ...updatedTask,

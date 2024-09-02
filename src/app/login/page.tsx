@@ -5,7 +5,7 @@ import withAuth from "@/hoc/withAuth";
 
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-gray-200">
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-200 px-[16px]">
       <LoginComponent/>
     </div>
   );

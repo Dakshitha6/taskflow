@@ -1,20 +1,17 @@
+import { AuthContextType } from "@/context/AuthContext";
 import axios from "axios";
-import { getAuth } from "firebase/auth";
 
 
-//for development
-const apiUrl = "http://localhost:5001";
-//for prod
-// const apiUrl = "https://taskflow-server-production.up.railway.app";
+const apiUrl =process.env.SERVER_URL || "http://localhost:5001";
 
-export const fetchTodosAPI = async (firebaseUserId: string, search?: string) => {
-  try {
-    const user = getAuth().currentUser;
+export const fetchTodosAPI = async (authContext: AuthContextType, search?: string) => {
+  try{
+    const user =authContext?.user;
     if (!user) throw new Error("User not authenticated");
 
-    const idToken = await user.getIdToken();
+    const idToken = authContext?.token;
 
-    const payload: { userId: string; search?: string } = { userId: firebaseUserId };
+    const payload: { userId: string; search?: string } = { userId: authContext.user!.uid };
     if (search) {
       payload.search = search;
     }
@@ -38,16 +35,16 @@ export const fetchTodosAPI = async (firebaseUserId: string, search?: string) => 
 };
 
 
-export const createTaskAPI = async (taskData: {
+export const createTaskAPI = async (authContext: AuthContextType,taskData: {
   name: string;
   description: string;
   createdBy: string;
   progress: string;
 }) => {
   try {
-    const user = getAuth().currentUser;
+    const user =authContext?.user;
     if (!user) throw new Error("User not authenticated");
-    const idToken = await user.getIdToken();
+    const idToken = authContext?.token;
 
     const response = await axios.post(`${apiUrl}/createTask`, taskData, {
       headers: {
@@ -63,16 +60,17 @@ export const createTaskAPI = async (taskData: {
 
 
 export const updateTaskAPI = async (
+  authContext: AuthContextType,
   taskId: string,
   progress?: string,
   name?: string,
   description?: string
 ) => {
   try {
-    const user = getAuth().currentUser;
+    const user =authContext?.user;
     if (!user) throw new Error("User not authenticated");
 
-    const idToken = await user.getIdToken();
+    const idToken = authContext?.token;
 
     const response = await axios.post(
       `${apiUrl}/updateTask`,
@@ -98,10 +96,10 @@ export const updateTaskAPI = async (
 
 
 
-export const deleteTaskAPI = async (taskId: string) => {
-    const user = getAuth().currentUser;
+export const deleteTaskAPI = async (authContext: AuthContextType,taskId: string) => {
+  const user =authContext?.user;
     if (!user) throw new Error("User not authenticated");
-    const idToken = await user.getIdToken();
+    const idToken = authContext?.token;
     const response = await axios.post(`${apiUrl}/deleteTask`,{id:taskId},{headers:{Authorization: `Bearer ${idToken}`}});
     return response.data;
   };
