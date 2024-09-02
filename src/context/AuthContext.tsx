@@ -6,29 +6,25 @@ import { auth } from "@/services/firebase.config";
 import SplashScreen from "@/components/SplashScreen";
 
 interface AuthContextType {
-  user: User | null;
+  user: User | null | undefined;
   token: string | null;
   refreshToken: () => Promise<void>;
   logout: () => Promise<void>;
-  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
   const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true); 
   const router = useRouter();
   const path = usePathname();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setLoading(true); 
-
       if (currentUser) {
-        setUser(currentUser);
         const idToken = await currentUser.getIdToken();
+        setUser(currentUser);
         setToken(idToken);
         router.push("/dashboard");
       } else {
@@ -38,8 +34,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           router.push("/login");
         }
       }
-
-      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -60,12 +54,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, refreshToken, logout, loading }}>
-       {loading ? (
-     <SplashScreen/>
-    ) : (
-      children
-    )}
+    <AuthContext.Provider value={{ user, token, refreshToken, logout }}>
+      {user === undefined ? (
+        <SplashScreen />
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };

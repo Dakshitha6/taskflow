@@ -162,7 +162,7 @@ const Dashboard = () => {
     setIsModalOpen(true);
   };
 
-  if (!user) return <SplashScreen />;
+  // if (!user) return <SplashScreen />;
 
   return (
     <div className="container mx-auto px-[16px] md:px-[32px] lg:px-[48px] py-6">

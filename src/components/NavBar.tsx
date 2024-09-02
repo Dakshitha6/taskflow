@@ -52,7 +52,7 @@ function Navbar() {
                   <img
                     src={
                       avatarUrl ||
-                      "/images/default-avatar1.png"
+                      "/images/avatar1.png"
                     }
                     alt="User Avatar"
                     className="h-[36px] w-[36px] rounded-full object-cover ml-4 cursor-pointer"
@@ -85,7 +85,7 @@ function Navbar() {
           <div className="md:hidden flex items-center">
             {user && (
               <img
-                src={avatarUrl || "/images/default-avatar1.png"}
+                src={avatarUrl || "/images/avatar1.png"}
                 alt="User Avatar"
                 className="h-8 w-8 rounded-full object-cover mr-4 cursor-pointer"
                 onClick={() => setIsModalOpen(true)}

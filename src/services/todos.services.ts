@@ -3,9 +3,9 @@ import { getAuth } from "firebase/auth";
 
 
 //for development
-// const apiUrl = "http://localhost:5001";
+const apiUrl = "http://localhost:5001";
 //for prod
-const apiUrl = "https://taskflow-server-production.up.railway.app";
+// const apiUrl = "https://taskflow-server-production.up.railway.app";
 
 export const fetchTodosAPI = async (firebaseUserId: string, search?: string) => {
   try {
