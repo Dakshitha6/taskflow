@@ -2,7 +2,7 @@ import { AuthContextType } from "@/context/AuthContext";
 import axios from "axios";
 
 
-const apiUrl =process.env.SERVER_URL || "http://localhost:5001";
+const apiUrl =process.env.SERVER_URL || "https://taskflow-server-production.up.railway.app";
 
 export const fetchTodosAPI = async (authContext: AuthContextType, search?: string) => {
   try{
